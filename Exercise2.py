@@ -24,18 +24,18 @@ print('Import numpy as np successfully')
 #  #### ${\mu}$ = Gaussian noise sẽ được tạo ra từ hàm random trong thư viện numpy
 
 # %%
-X1 = 2 * np.random.rand(100,1)
-X2 = 3 * np.random.rand(100,1)
-X3 = 4 * np.random.rand(100,1)
-y = 4 + 3*X1 + 5*X2 + 2*X3 + np.random.randn(100,1)
+x1 = 2 * np.random.rand(100,1)
+x2 = 3 * np.random.rand(100,1)
+x3 = 4 * np.random.rand(100,1)
+y = 4 + 3*x1 + 5*x2 + 2*x3 + np.random.randn(100,1)
 
 # %% [markdown]
 #  ### Tổng quát về dataset vừa được tạo ra
-#  #### X1,X2,X3 vừa được tạo ra
+#  #### x1,x2,x3 vừa được tạo ra
 
 # %%
-print('X1           X2              X3')
-for i in range(5): print(X1[i],X2[i],X3[i])
+print('x1           x2              x3')
+for i in range(5): print(x1[i],x2[i],x3[i])
 
 # %% [markdown]
 #  #### y vừa được tạo ra
@@ -44,40 +44,64 @@ for i in range(5): print(X1[i],X2[i],X3[i])
 for i in range(5): print(y[i])
 
 # %% [markdown]
-#  ### Đồ thị Scatter quan hệ giữa X1, X2, X3 và y
+#  ### Đồ thị Scatter quan hệ giữa x1, x2, x3 và y
 
 # %%
 import matplotlib.pyplot as plt
 print('Import pyplot as plt successfully') 
 
 # %% [markdown]
-#  #### Đồ thị Scatter giữa X1 và y
+#  #### Đồ thị Scatter giữa x1 và y
 
 # %%
-plt.scatter(X1,y)
+plt.scatter(x1,y)
 
 # %% [markdown]
-#  #### Đồ thị Scatter giữa X2 và y
+#  #### Đồ thị Scatter giữa x2 và y
 
 # %%
-plt.scatter(X2,y)
+plt.scatter(x2,y)
 
 # %% [markdown]
-# #### Đồ thị Scatter giữa X3 và y
+# #### Đồ thị Scatter giữa x3 và y
 
 # %%
-plt.scatter(X3,y)
+plt.scatter(x3,y)
 
 
 # %% [markdown]
 # ### Tính toán $\hat{\theta}$ sử dụng Normal Equation
 
+# %% [markdown]
+# ### Tiến hành tính toán $\hat{\theta}$ 
+# #### Ta sẽ lần lượt tính toán $\hat{\theta}_0$, $\hat{\theta}_1$, $\hat{\theta}_2$ và $\hat{\theta}_3$  
+X = np.array([x1,x2,x3]) #easier to iterate
+min_theta = [[0,0]] * 3 #for every [0,0] contains theta0 and theta[i]
+                        # Further explanation below 
+for i in range(3): #calculate theta 
+    X_b = np.c_[np.ones((100,1)),X[i]]
+    theta_best = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y) #return theta0 and theta[i]
+    min_theta[i] = theta_best
 
 # %% [markdown]
-# #### Gom nhóm X1,X2,X3 thành một ma trận và thêm vào 1 trước mỗi dòng 
-X = np.array([X1,X2,X3]) #Transfer 3 matrices into X
-X_b = np.insert(X,0,1.0,axis = 1) #Add one to each instance
+# ### Xem kết quả vừa tính toán được 
+# #### Giải thích thêm về min_theta
+# #### min_theta là mảng 2 chiều, mỗi phần tử trong mảng chứa kết quả theta0 và theta[i]
+for i in range(3): 
+    print(min_theta[i])
+
+# %% [markdown] 
+# ### Nhận xét: 
+# #### * Phương trình ban đầu: $y(x,$${\theta}$$)$ = 4 + 3$x_1$ + 5$x_2$ + 2$x_3$ + ${\mu}$ 
+# #### * Ta nhận thấy được rằng kết quả trả về có sai số khá lớn đặc biệt là theta0 và tương tự đối với các theta còn lại. 
+# #### * Đồng thời ta còn nhận được 2 kết quả theta0 khác nhau vì vậy ta sẽ không tiến hành kiểm tra kết quả (Prediction) của model
 
 # %% [markdown]
-# #### Tiến hành tính toán $\hat{\theta }$ 
-theta_min = 
+# ## Sử dụng Linear Regression trên thư viện Scikit-learn 
+# ### Thêm thư viện
+from sklearn.linear_model import LinearRegression
+lin_reg = LinearRegression
+
+
+# %% [markdown]
+# ## 
