@@ -209,11 +209,11 @@ y_predict_All
 
 # %% [markdown] 
 # Report cuả mô hình sử dụng biến liên tục `FeatureName_Cont` 
-print(classification_report(y_predict_Cont,y))
+print(classification_report(y,y_predict_Cont))
 
-# %%
-# Print out report
-print(classification_report(y_predict_All,y))
+# %% [markdown]
+# Report của mô hình sử dụng tất cả các thuộc tính
+print(classification_report(y,y_predict_All))
 
 
 # %% [markdown]
@@ -223,3 +223,11 @@ print(classification_report(y_predict_All,y))
 # * Khi sử dụng hết tất cả các features có trong dataset 
 # thì `accuracy` mà ta nhận được từ mô hình cho kết quả cao hơn đáng kể là $0.79$
 # * Tuy nhiên `accuracy` này vẫn còn rất thấp 
+
+
+
+# %% 
+
+
+
+
